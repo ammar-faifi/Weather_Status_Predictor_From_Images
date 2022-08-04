@@ -1,0 +1,6 @@
+{
+    "secrets.enabledFolders": [
+        "Azure"
+    ],
+    "python.formatting.provider": "black"
+}
