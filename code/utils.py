@@ -11,7 +11,10 @@ import numpy as np
 
 CLASSES = {
     "sunny": 0,
-    "foggy": 1,
+    "cloudy": 1,
+    "foggy": 2,
+    "rainy": 3,
+    "snowy": 4,
 }
 DATA_DIR = Path("../data")
 
