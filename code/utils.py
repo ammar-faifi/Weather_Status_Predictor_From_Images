@@ -42,7 +42,10 @@ def load_all_images(
             DATA_DIR
         ), "The class didn't match any folder"
 
-        for file in os.listdir(DATA_DIR / class_):
+        files = filter(
+            lambda x: not x.startswith("._"), os.listdir(DATA_DIR / class_)
+        )
+        for file in files:
             img = Image.open(DATA_DIR / class_ / file)
 
             # convert into gray and resize
