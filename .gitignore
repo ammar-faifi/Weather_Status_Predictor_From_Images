@@ -238,3 +238,4 @@ cython_debug/
 # ignore the data folders for now
 data/
 bing_search.json
+outside_datasets/
