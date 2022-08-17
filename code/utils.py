@@ -19,6 +19,25 @@ CLASSES = {
 DATA_DIR = Path("../data")
 
 
+def get_class_name(class_number: int) -> str:
+    """Find the class name from given number.
+
+    Args:
+        class_number (int): class number
+
+    Raises:
+        KeyError: if `class_number` was not found.
+
+    Returns:
+        str: the class' name
+    """
+
+    for key, val in CLASSES.items():
+        if val == class_number:
+            return key
+    raise KeyError(f"`class_number = {class_number}` not found")
+
+
 def load_all_images(
     classes: list, pixels: int = 50
 ) -> Tuple[List[np.ndarray], List[int]]:
