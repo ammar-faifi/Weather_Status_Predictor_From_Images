@@ -80,7 +80,7 @@ def load_all_images(
     return images, labels
 
 
-def predict_image(result, file: str, pixels: int = 50, show: bool = False) -> int:
+def predict_image(result, file: str, pixels: int = 50, show: bool = False) -> str:
     """Return the prediction of the `file` image"""
 
     img = Image.open(file)
