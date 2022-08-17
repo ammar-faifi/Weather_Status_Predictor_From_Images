@@ -10,9 +10,10 @@ You can find This file in `./data_compressed/data.zip`
 
 | Class   |   Folder  |   Images Count  |
 ---       | ---       | ---             |
-| Sunny   | sunny     | 6274             |
+| Sunny   | sunny     | 6702             |
+| Cloudy  | cloudy    | 6274             |
 | Foggy   | foggy     | 1261             |
 | Rainy   | rainy     | 1927             |
 | Snowy   | snowy     | 1875             |
-| Total   | -         | 11337            |
+| Total   | -         | 18039            |
 ---
