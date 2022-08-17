@@ -8,6 +8,7 @@ from typing import Tuple, List
 
 from PIL import Image
 import numpy as np
+import matplotlib.pyplot as plt
 
 CLASSES = {
     "sunny": 0,
@@ -79,7 +80,7 @@ def load_all_images(
     return images, labels
 
 
-def predict_image(result, file: str, pixels: int = 50) -> int:
+def predict_image(result, file: str, pixels: int = 50, show: bool = False) -> int:
     """Return the prediction of the `file` image"""
 
     img = Image.open(file)
@@ -89,4 +90,12 @@ def predict_image(result, file: str, pixels: int = 50) -> int:
     # scale pixel values out of 256 values
     img_array = np.asarray(img).flatten() / 255
 
-    return get_class_name(result.predict([img_array])[0])
+    # predict
+    pred = get_class_name(result.predict([img_array])[0])
+
+    if show:
+        ax = plt.gca()
+        ax.imshow(img_array.reshape((pixels, pixels)), cmap=plt.get_cmap('gray'))
+        ax.set_title(f'The predicted class is {pred}')
+
+    return pred
