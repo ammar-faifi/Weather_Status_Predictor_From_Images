@@ -80,7 +80,9 @@ def load_all_images(
     return images, labels
 
 
-def predict_image(result, file: str, pixels: int = 50, show: bool = False) -> str:
+def predict_image(
+    result, file: str, pixels: int = 50, show: bool = False
+) -> str:
     """Return the prediction of the `file` image"""
 
     img = Image.open(file)
@@ -95,7 +97,9 @@ def predict_image(result, file: str, pixels: int = 50, show: bool = False) -> st
 
     if show:
         ax = plt.gca()
-        ax.imshow(img_array.reshape((pixels, pixels)), cmap=plt.get_cmap('gray'))
-        ax.set_title(f'The predicted class is {pred}')
+        ax.imshow(
+            img_array.reshape((pixels, pixels)), cmap=plt.get_cmap("gray")
+        )
+        ax.set_title(f"The predicted class is {pred}")
 
     return pred
