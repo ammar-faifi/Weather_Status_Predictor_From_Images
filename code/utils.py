@@ -81,7 +81,7 @@ def load_all_images(
 
 
 def predict_image(
-    result, file: str, pixels: int = 50, show: bool = False
+    model, file: str, pixels: int = 50, show: bool = False
 ) -> str:
     """Return the prediction of the `file` image"""
 
@@ -93,13 +93,14 @@ def predict_image(
     img_array = np.asarray(img).flatten() / 255
 
     # predict
-    pred = get_class_name(result.predict([img_array])[0])
+    pred = get_class_name(model.predict([img_array])[0])
+    prob = model.predict_proba([img_array])[0]
 
     if show:
         ax = plt.gca()
         ax.imshow(
             img_array.reshape((pixels, pixels)), cmap=plt.get_cmap("gray")
         )
-        ax.set_title(f"The predicted class is {pred}")
+        ax.set_title(f"{prob[0]*100:0.1f}% sunny & {prob[1]*100:0.1f}% cloudy")
 
-    return pred
+    return prob
