@@ -82,11 +82,11 @@ def load_all_images(
 def predict_image(result, file: str, pixels: int = 50) -> int:
     """Return the prediction of the `file` image"""
 
-    img = Image.open(DATA_DIR / file)
+    img = Image.open(file)
 
     # convert into gray and resize
     img = img.convert("L").resize((pixels, pixels))
     # scale pixel values out of 256 values
     img_array = np.asarray(img).flatten() / 255
 
-    return result.predict([img_array])[0]
+    return get_class_name(result.predict([img_array])[0])
