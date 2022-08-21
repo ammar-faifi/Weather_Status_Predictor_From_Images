@@ -101,6 +101,8 @@ def load_all_images_3channel(
         for file in files:
             img = Image.open(DATA_DIR / class_ / file)
 
+            # convert into gray and resize
+            img = img.resize((pixels, pixels))
             # scale pixel values out of 256 values
             img_array = np.asarray(img) / 255
 
