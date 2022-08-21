@@ -87,8 +87,9 @@ def load_all_images_3channel(
     it as RGB and no flattenning.
     """
 
-    images = []
-    labels = []
+    images = None
+    labels = np.array([])
+    i = 0
 
     for class_ in classes:
         assert class_ in os.listdir(
@@ -99,16 +100,21 @@ def load_all_images_3channel(
             lambda x: not x.startswith("._"), os.listdir(DATA_DIR / class_)
         )
         for file in files:
+            i += 1
+            print(i)
             img = Image.open(DATA_DIR / class_ / file)
 
             # convert into gray and resize
-            img = img.resize((pixels, pixels))
+            img = img.convert("RGB").resize((pixels, pixels))
             # scale pixel values out of 256 values
             img_array = np.asarray(img) / 255
 
             # append `img_array` and its class number
-            images.append(img_array)
-            labels.append(CLASSES[class_])
+            labels = np.append(labels, CLASSES[class_])
+            if images is None:
+                images = img_array
+            else:
+                images = np.append(images, img_array, axis=0)
 
     return images, labels
 
