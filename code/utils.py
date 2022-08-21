@@ -80,6 +80,37 @@ def load_all_images(
     return images, labels
 
 
+def load_all_images_3channel(
+    classes: list, pixels: int = 50
+) -> Tuple[List[np.ndarray], List[int]]:
+    """Same as `loa_all_images` but keeps
+    it as RGB and no flattenning.
+    """
+
+    images = []
+    labels = []
+
+    for class_ in classes:
+        assert class_ in os.listdir(
+            DATA_DIR
+        ), "The class didn't match any folder"
+
+        files = filter(
+            lambda x: not x.startswith("._"), os.listdir(DATA_DIR / class_)
+        )
+        for file in files:
+            img = Image.open(DATA_DIR / class_ / file)
+
+            # scale pixel values out of 256 values
+            img_array = np.asarray(img) / 255
+
+            # append `img_array` and its class number
+            images.append(img_array)
+            labels.append(CLASSES[class_])
+
+    return images, labels
+
+
 def predict_image(
     model, file: str, pixels: int = 50, show: bool = False
 ) -> str:
