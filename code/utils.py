@@ -3,6 +3,7 @@
 """
 
 import os
+import sys
 from pathlib import Path
 from typing import Tuple, List
 
@@ -101,7 +102,8 @@ def load_all_images_3channel(
         )
         for file in files:
             i += 1
-            print(i)
+            sys.stdout.write(f"\r has prosseced {i}")
+            sys.stdout.flush()
             img = Image.open(DATA_DIR / class_ / file)
 
             # convert into gray and resize
