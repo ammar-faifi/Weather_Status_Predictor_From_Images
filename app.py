@@ -10,7 +10,15 @@ import base64
 import keras
 import numpy as np
 from PIL import Image
+from sklearn.model_selection import RandomizedSearchCV
 from dash import Dash, dcc, html, Input, Output, State
+
+ML_PIXELS = 50
+CNN_PIXELS = 200
+
+# Load ML and DL models
+with open("./code/tunned_xgb_random_result.pickle", "rb") as file:
+    tunned_xgb_random_result: RandomizedSearchCV = pickle.load(file)
 
 
 external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
@@ -62,7 +70,7 @@ def construct_html_image(contents, filename):
             html.H5(filename),
             # HTML images accept base64 encoded strings in the same format
             # that is supplied by the upload
-            html.Img(src=contents, style={'width': '50%'}),
+            html.Img(src=contents, style={"width": "50%"}),
             html.Hr(),
         ]
     )
@@ -85,9 +93,9 @@ def render_main_tabs(tab):
                         ]
                     ),
                     style=upload_style,
-                    accept='image/png,image/jpg,image/jpeg'
+                    accept="image/jpg,image/jpeg",
                 ),
-                html.Button('Predict', id='predict_btn1'),
+                html.Button("Predict", id="predict_btn1"),
                 html.Hr(),
                 html.Div(id="output_image"),
             ]
@@ -98,8 +106,8 @@ def render_main_tabs(tab):
 
 @app.callback(
     Output("output_image", "children"),
-    Output('loading', 'children'),
-    Input('predict_btn1', 'n_clicks'),
+    Output("loading", "children"),
+    Input("predict_btn1", "n_clicks"),
     State("upload1", "contents"),
     State("upload1", "filename"),
     running=[
@@ -107,16 +115,21 @@ def render_main_tabs(tab):
     ],
 )
 def upload_image(n_clicks, content, filename):
-    print(n_clicks)
-    # time.sleep(1)
 
     if content is not None:
         # decode base64 imge into IOByte
         print(content[:100])
 
-        text = content.removeprefix('data:image/jpeg;base64,')
+        text = content.removeprefix("data:image/jpeg;base64,")
         text = base64.b64decode(text)
-        img = Image.open(io.BytesIO(text))
+        img = (
+            Image.open(io.BytesIO(text))
+            .convert("L")
+            .resize((ML_PIXELS, ML_PIXELS))
+        )
+        img_array = np.asarray(img).flatten() / 255
+
+        print(tunned_xgb_random_result.predict_proba([img_array]))
 
         return construct_html_image(content, filename), None
 
