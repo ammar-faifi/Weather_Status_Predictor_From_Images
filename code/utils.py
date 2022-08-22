@@ -156,7 +156,12 @@ def predict_image_3c(
     img = img.convert("RGB").resize((pixels, pixels))
     # scale pixel values out of 256 values
     img_array = np.asarray(img) / 255
+
+    if show:
+        plt.gca().imshow(img_array)
+
     # reashape to feed it in the CNN
     img_array = img_array.reshape((1, pixels, pixels, 3))
+
 
     return model.predict(img_array, verbose=False)

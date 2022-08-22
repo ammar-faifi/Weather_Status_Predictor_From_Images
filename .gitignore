@@ -239,3 +239,9 @@ cython_debug/
 data/
 bing_search.json
 outside_datasets/
+
+# Qurato
+/.quarto/
+_site/
+
+/env/
