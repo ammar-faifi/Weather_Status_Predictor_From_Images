@@ -9,9 +9,12 @@ import base64
 
 import keras
 import numpy as np
+import pandas as pd
+import dash_bootstrap_components as dbc
 from PIL import Image
 from sklearn.model_selection import RandomizedSearchCV
 from dash import Dash, dcc, html, Input, Output, State
+
 
 ML_PIXELS = 50
 CNN_PIXELS = 200
@@ -24,7 +27,8 @@ with open("./code/tunned_xgb_random_result.pickle", "rb") as file:
 external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
 app = Dash(
     __name__,
-    external_stylesheets=external_stylesheets,
+    # external_stylesheets=external_stylesheets,
+    external_stylesheets=[dbc.themes.BOOTSTRAP],
     suppress_callback_exceptions=True,
 )
 server = app.server
@@ -40,7 +44,8 @@ upload_style = {
     "margin": "10px",
 }
 
-app.layout = html.Div(
+
+app.layout = dbc.Container(
     [
         html.H1("online weather status predictor from images".title()),
         html.P("To start select the way you want to predict."),
@@ -81,31 +86,41 @@ def render_main_tabs(tab):
     """Callback to render main_tabs"""
 
     if tab == "binary_tab":
-        return html.Div(
-            [
-                html.H3("Binary Classification: sunny vs. cloudy"),
-                dcc.Upload(
-                    id="upload1",
-                    children=html.Div(
-                        [
-                            "Drag and Drop or ",
-                            html.A("Select an Image"),
-                        ]
-                    ),
-                    style=upload_style,
-                    accept="image/jpg,image/jpeg",
+        return [
+            html.H3("Binary Classification: sunny vs. cloudy"),
+            dcc.Upload(
+                id="upload1",
+                children=html.Div(
+                    [
+                        "Drag and Drop or ",
+                        html.A("Select an Image"),
+                    ]
                 ),
-                html.Button("Predict", id="predict_btn1"),
-                html.Hr(),
-                html.Div(id="output_image"),
-            ]
-        )
+                style=upload_style,
+                accept="image/jpg,image/jpeg",
+            ),
+            html.Div(
+                dbc.Button("Predict", id="predict_btn1", color="primary"),
+                className="d-grid gap-2 col-4 mx-auto",
+            ),
+            html.Div(id="output_image", className="text-center"),
+            dbc.Row(
+                html.Div(id="output_table", className="text-center"),
+                class_name="col-4",
+            ),
+        ]
 
     return html.Div([html.H3("5-Class Predictor")])
 
 
+table_header = [
+    html.Thead(html.Tr([html.Th("Class"), html.Th("Probability")]))
+]
+
+
 @app.callback(
     Output("output_image", "children"),
+    Output("output_table", "children"),
     Output("loading", "children"),
     Input("predict_btn1", "n_clicks"),
     State("upload1", "contents"),
@@ -117,9 +132,7 @@ def render_main_tabs(tab):
 def upload_image(n_clicks, content, filename):
 
     if content is not None:
-        # decode base64 imge into IOByte
-        print(content[:100])
-
+        # decode base64 image into IOByte
         text = content.removeprefix("data:image/jpeg;base64,")
         text = base64.b64decode(text)
         img = (
@@ -128,12 +141,19 @@ def upload_image(n_clicks, content, filename):
             .resize((ML_PIXELS, ML_PIXELS))
         )
         img_array = np.asarray(img).flatten() / 255
+        prob = tunned_xgb_random_result.predict_proba([img_array]).flatten()
+        prob = np.round(prob * 100, 1)
 
-        print(tunned_xgb_random_result.predict_proba([img_array]))
+        row1 = html.Tr([html.Td("Sunny"), html.Td(str(prob[0]))])
+        row2 = html.Tr([html.Td("Cloudy"), html.Td(str(prob[1]))])
 
-        return construct_html_image(content, filename), None
+        table = dbc.Table(
+            table_header + [html.Tbody([row1, row2])], bordered=True
+        )
 
-    return None, None
+        return construct_html_image(content, filename), table, None
+
+    return (None,) * 3
 
 
 if __name__ == "__main__":

@@ -13,3 +13,4 @@ MarkupSafe==2.1.1
 plotly==5.10.0
 tenacity==8.0.1
 Werkzeug==2.2.2
+dash-bootstrap-components
