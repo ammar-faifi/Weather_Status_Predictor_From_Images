@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.651">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>site – webscrape-images</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">site</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../code/Binary_Classification.html">Binary Clssification with ML</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../code/DL.html">Basic DL</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../code/CNN.html">CNN</a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#collect-images" id="toc-collect-images" class="nav-link active" data-scroll-target="#collect-images">Collect images</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> io</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> selenium <span class="im">import</span> webdriver</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> selenium.webdriver.common.by <span class="im">import</span> By</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> selenium.webdriver.common.keys <span class="im">import</span> Keys</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="collect-images" class="level2">
+<h2 class="anchored" data-anchor-id="collect-images">Collect images</h2>
+<p>Open a GET HTTP request with the searched params for the serach engines such Bing, and retrieve all the images. Store the images in a current directory.</p>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>browser <span class="op">=</span> webdriver.Safari()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>browser.set_window_position(<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>browser.set_window_size(<span class="dv">1200</span>, <span class="dv">1200</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>BING_URL <span class="op">=</span> <span class="st">'https://www.bing.com/images/search?q=sunny+weather'</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>browser.get(BING_URL)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>bs <span class="op">=</span> BeautifulSoup(browser.page_source)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get all image tiles</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>a_element <span class="op">=</span> browser.find_elements(By.CSS_SELECTOR, <span class="st">"[data-idx]"</span>)[<span class="dv">1</span>].find_element(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    By.CLASS_NAME, <span class="st">"inflnk"</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># a_element.get_attribute('href')</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>a_element.send_keys(Keys.RETURN)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># switch to opened image iframe</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>browser.switch_to.frame(<span class="st">'OverlayIFrame'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># switch back to the page</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>browser.switch_to.default_content()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="149">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># find elements in the iframe</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>side_images <span class="op">=</span> browser.find_elements(By.TAG_NAME, <span class="st">'li'</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> img <span class="kw">in</span> side_images:</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(img.find_element(By.TAG_NAME, <span class="st">'img'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="149">
+<pre><code>[&lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-A28DF694-2057-4F78-B706-B765AB45923D")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-A81A0994-F06F-4CA3-A985-D1E922960BE5")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-CA676F28-C2AF-4393-B7C0-114E1CB03A3A")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-FE650838-13BF-457F-B4A1-E97E5031F600")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-D8AB783C-15FD-4C06-BF88-B521052F60DA")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-4823D837-AC31-44DC-90E4-58C2BCA19717")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-14180BCC-8B62-4417-B576-D2486FA79780")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-5718E66A-DC11-462D-B22B-7795EDBF1877")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-F395DE15-74B1-40AD-BCBF-ECC58E4DAEEC")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-271730E2-5012-450B-BF07-76850ED521C8")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-855CE451-9808-44A8-A9E8-12AB23845456")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-0F9BF14A-2754-4785-BFE0-DD464997A8A5")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-146DD378-46CF-4DB8-AB13-782C2DE165D3")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-D25F8E64-2204-4F7A-93D9-2A878BD0B98C")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-280397B7-8951-48FD-8A5C-99DFB07DE592")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-27DAB8CE-C212-4B95-95C8-526E6668B4E4")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-A1A24CC8-A951-4884-B44A-9372B5923463")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-79C551A7-7F11-4252-B643-FFC426EFF6BA")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-4DCF67D1-35F2-44DA-9098-CD9A440427EA")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-8290E49E-F028-4DA6-A754-A70750FBED5F")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-D0D015D7-5BFF-4887-A5F0-D304FC3A3A13")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-F06AC939-FB00-45CD-B79B-4AB9E41168E3")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-03A2B3C9-9FEA-4158-8A45-042891E47397")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-D5A07D87-E5F3-4AA2-96D3-2CAD0B1F5CAD")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-7446C89B-BBBC-4F6C-A0F3-C9C31665C5E5")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-925C72CF-AA81-46B5-9896-040680219A83")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-DDD8F927-4A85-49E4-8AD8-7AAB1715B485")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-54DF03B4-7A8F-4DEB-95E6-0BBACD1D5FD5")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-2316C174-E8FD-4A32-BC85-0ED792E7563A")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-5A354B22-972D-4FBD-B0AB-41D0559BD725")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-8C651EAB-4EA3-4234-B942-128B94416E49")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-6C8CFBF9-FDD7-4B0D-881A-0EC164D54C93")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-200AEBF7-D30C-421C-8E8D-50ACBFDED8DF")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-E6418415-1638-4BD2-BFA5-A2E6049EAF5C")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-F0EC4EF7-6F9D-4421-BAA0-E62815D2EE92")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-EB283644-4D9D-4212-A353-67855C410491")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-3FBBF585-4A89-468E-9E18-5B65AB646BBE")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-533343DD-CB09-456B-9D3B-80ED07EF1A41")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-BF330C0E-53CF-4892-AAEA-413ABC269E72")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-356EB30F-D4EB-493B-9160-ADFE97BA92E1")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-C97B8698-FC4C-462D-A0B7-02E980165DA2")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-2C193C2F-A4E5-46B0-BA9B-0139C19ABA82")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-F0F25DA4-C215-4F89-97E9-2C215AE2C401")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-469C141A-C4B7-4075-B8BF-DD5AFEE45C14")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-A13EAFEB-7C40-4082-9075-D530CF33777B")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-28C23315-CB44-42A3-8F06-4FF150BF37D4")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-F5DF3BDA-7E90-484D-9E2C-254BCDD52EFB")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-8C21AB70-3190-4C0D-902D-8163CDE85AA7")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-7F95CB5E-A064-4ACD-8796-D79A50505CA7")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-C7220C4B-AED0-4434-B7E0-359648C60C88")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-1997679F-1184-4E2D-880B-B8692ABB290A")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-0ED678E5-CD7F-4E4C-90B9-20B2F57FC750")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-28C89B5D-E3BB-4044-A905-69F1709884FE")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-4F8DC6D8-6E40-463D-92B0-5B5C359D5FB1")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-57EF89FC-553F-414B-813B-6CA8D62CAA25")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-6EC1C8B8-7A56-4761-85BA-340774D11198")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-EFE1BC89-1123-4B70-AF88-073576E13459")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-E482C691-3ECF-4958-9899-A184C9DD805F")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-34E9F8AA-7078-4322-B833-A76BD9B74713")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-097980FF-1740-4B45-8B7A-6CE89E9E129F")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-F2FFEBC1-0CC2-4369-9CF7-22D9CBC2FFE9")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-DAAB3642-1D6C-463D-9D48-A06FE8BB15A6")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-244C4EDB-66D1-4F39-BBCD-C7137AF4D5FD")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-F4559C14-7D36-40D3-9853-22666C998B9C")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-7E7EDEB6-F670-4254-B7D5-9BB1E450A7A5")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-3583F2E9-9097-44B0-AB70-5F32B30D5599")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-C2AC6265-E13A-4BA4-BAFA-3803ED7262B7")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-66DC71A8-5595-42CE-AAD8-916A40ED5F1B")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-C6840678-46C2-4A45-9724-B0390A38F7CF")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-6CB1165E-1A85-4CA8-BFD1-6D8F57D26FD4")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-E6BDDCFF-8AEB-4398-A6C3-3E16CD4D51A5")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-B9D1D007-A3BE-45FC-B7FC-1B19E830C5A2")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-6C0CD0D5-C463-456F-9FB8-303705FAFAE0")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-7FDC4355-0E94-4768-A676-9553A3E606FF")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-F0A8F27E-8C0F-4E54-86E7-2DE7990E03B2")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-ECF57018-1097-4705-BD66-6C35CE483126")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-E0C289BA-D586-4BA7-9BDF-6DB4F15D3405")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-A83B526A-0FA7-45C1-BE22-4A1524A1D088")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-0E77C3B5-4A6A-41E1-B53E-CA2FEFA76236")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-2503D4EA-8783-4681-A173-07FCAF2F9603")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-B7E19E87-3D5D-4147-9D1E-D3074A317AAE")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-7EF2F5DF-900C-4D3C-A629-18333E913C3D")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-5B96BDC0-DD80-417B-8EDF-660F47C9D8DA")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-72665B20-4682-4E5F-B324-281170EA2974")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-21FE2CE7-1083-4FF5-A92B-F4C523469E24")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-3944E3D4-A7A1-4F9C-BDB6-B219FD33533B")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-D0349C81-8B1C-48E6-9817-64D49455F8D3")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-DCF750B7-E63C-4A83-B2F1-7454B60CC980")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-76494B53-6621-48A5-8F12-934692D06D9B")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-A39A14B8-AF2A-4FF2-97AD-C568957E49DA")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-C2BE51FE-C145-4F96-9CBD-26DC847E3C0F")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-D62E128C-99CF-47DA-A547-75301D562307")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-CF58B96C-E790-464D-8274-0748730847B7")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-3D9F81F0-7928-4F41-A565-AA279D2CA0A9")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-370E9A8E-496A-4272-9B23-708BA010D3FB")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-6BDA3DAB-9533-4D7E-A2F8-2BB5E43FA9C0")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-6CEEC4B3-D042-47B3-A65E-57E137FEACA5")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-D9FD21DD-F930-41B7-8560-AF2861327F85")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-81A8DF66-89E4-44C0-92E8-80FF21A2DC35")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-7CFF3BFD-7B7A-4061-8F9D-8BB3031BA055")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-8C1D1193-BF75-4640-B153-17E51F1F9388")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-B196C336-2534-43FA-8679-FB15D0C7BF45")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-FBC9B7DC-923F-43EC-9254-01C954E2ADED")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-F0985DD6-AF43-4A67-84CE-C2F584B331FF")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-E625F074-EE24-4EF8-90D2-F9527B1E13BE")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-EFA2FE98-B89E-4FC4-B342-4A938D696519")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-CF1550D0-1F99-4DF0-9A56-A2C41FA20364")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-957AB0C2-6171-48E5-BEB2-F72559733DA8")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-28C2A50F-AAEF-4391-B762-152C24F56A15")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-79DCD2DB-0C81-4C82-B4D2-55F77F5AAF64")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-75A2988B-6A36-4D23-A38E-92B85C376CBD")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-F62A486D-2D75-4DAB-BD53-1672F90D8540")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-E16BC3EE-38CF-418D-84DD-126582FB910D")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-9C969BDA-A09D-4281-877F-469D356FBA14")&gt;,
+ &lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-C698D86D-DDB9-42A8-860A-E393EC4E0882")&gt;]</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="130">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>browser.find_element(By.CLASS_NAME, <span class="st">'richImgLnk'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="130">
+<pre><code>&lt;selenium.webdriver.remote.webelement.WebElement (session="20C65124-0EAF-4858-ADD6-3EA004EFCC76", element="node-9C8C1F2A-CA78-4F55-A850-A11BDF933CAE")&gt;</code></pre>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># quick look at the selected HTML element</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>Image.<span class="bu">open</span>(io.BytesIO(el.screenshot_as_png))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>all_img <span class="op">=</span> bs.find_all(<span class="st">'img'</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="op">*</span>all_img, sep<span class="op">=</span><span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> img <span class="kw">in</span> all_img:</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(img[<span class="st">'src'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>browser.stop_client()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>BING_URL <span class="op">=</span> <span class="st">'https://www.bing.com/images/search?q=sunny+weather'</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># SEARCH_KEYS = ['sunny', 'weahter']</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> requests.get(BING_URL)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>content <span class="op">=</span> BeautifulSoup(res.content)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># print(content)</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>var <span class="op">=</span> content.find_all(<span class="st">'img'</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>var1 <span class="op">=</span> content.find_all(<span class="st">'img'</span>, class_<span class="op">=</span><span class="st">'mimg'</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="op">*</span>var, sep<span class="op">=</span><span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="op">*</span>var1, sep<span class="op">=</span><span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co"># image_urls = []</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co"># for img in content.find_all('img', class_='mimg'):</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     image_urls.append(img['src'].split('?')[0])</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(image_urls)):</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    res <span class="op">=</span> requests.get(image_urls[i], stream<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f'sunny/</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">.jpg'</span>, <span class="st">'wb'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">file</span>.write(res.content)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
