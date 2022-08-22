@@ -159,4 +159,4 @@ def predict_image_3c(
     # reashape to feed it in the CNN
     img_array = img_array.reshape((1, pixels, pixels, 3))
 
-    return model.predict(img_array)
+    return model.predict(img_array, verbose=False)
