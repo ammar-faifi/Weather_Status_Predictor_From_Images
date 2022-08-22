@@ -44,9 +44,27 @@ upload_style = {
     "margin": "10px",
 }
 
+row_content = [
+    dbc.Col(html.Div("One of two columns"), width=4),
+    dbc.Col(html.Div("One of two columns"), width=4),
+]
+
+row = html.Div(
+    [
+        dbc.Row(
+            row_content,
+            justify="center",
+        ),
+        dbc.Row(
+            row_content,
+            justify="end",
+        ),
+    ]
+)
 
 app.layout = dbc.Container(
     [
+        # row,
         html.H1("online weather status predictor from images".title()),
         html.P("To start select the way you want to predict."),
         # Loading indicator
@@ -104,10 +122,11 @@ def render_main_tabs(tab):
                 className="d-grid gap-2 col-4 mx-auto",
             ),
             html.Div(id="output_image", className="text-center"),
-            dbc.Row(
-                html.Div(id="output_table", className="text-center"),
-                class_name="col-4",
-            ),
+            dbc.Row([
+                dbc.Col(width=4),
+                dbc.Col(id="output_table", width=4),
+                dbc.Col(width=4)
+            ]),
         ]
 
     return html.Div([html.H3("5-Class Predictor")])
