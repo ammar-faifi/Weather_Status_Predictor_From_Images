@@ -143,3 +143,20 @@ def predict_image(
         ax.set_title(f"{prob[0]*100:0.1f}% sunny & {prob[1]*100:0.1f}% cloudy")
 
     return prob
+
+def predict_image_3c(
+    model, file: str, pixels: int = 50, show: bool = False
+) -> str:
+    """Return the prediction of the `file` image
+    with 3 channels, for CNN."""
+
+    img = Image.open(file)
+
+    # convert into gray and resize
+    img = img.convert("RGB").resize((pixels, pixels))
+    # scale pixel values out of 256 values
+    img_array = np.asarray(img) / 255
+    # reashape to feed it in the CNN
+    img_array = img_array.reshape((1, pixels, pixels, 3))
+
+    return model.predict(img_array)
