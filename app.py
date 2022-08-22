@@ -3,13 +3,10 @@
 """
 
 import io
-import time
 import pickle
 import base64
 
-import keras
 import numpy as np
-import pandas as pd
 import dash_bootstrap_components as dbc
 from PIL import Image
 from sklearn.model_selection import RandomizedSearchCV
