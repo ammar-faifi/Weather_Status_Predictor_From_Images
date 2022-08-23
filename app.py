@@ -100,37 +100,38 @@ def construct_html_image(image, filename):
 def render_main_tabs(tab):
     """Callback to render main_tabs"""
 
-    if tab == "binary_tab":
-        return [
-            html.H3("Binary Classification: sunny vs. cloudy"),
-            dcc.Upload(
-                id="upload1",
-                children=html.Div(
-                    [
-                        "Drag and Drop or ",
-                        html.A("Select an Image"),
-                    ]
-                ),
-                style=upload_style,
-                accept="image/jpg,image/jpeg",
-            ),
-            html.Div(
-                dbc.Button("Predict", id="predict_btn1", color="primary"),
-                className="d-grid gap-2 col-4 mx-auto",
-            ),
-            html.Div(id="output_image", className="text-center"),
-            dbc.Row(
+    main_body = [
+        dcc.Upload(
+            id="upload1",
+            children=html.Div(
                 [
-                    dbc.Col(width=5),
-                    dbc.Col(id="output_table", width=2),
-                    dbc.Col(width=5),
+                    "Drag and Drop or ",
+                    html.A("Select an Image"),
                 ]
             ),
-            html.H5("Processed Image"),
-            html.Div(id="output_fig"),
-        ]
+            style=upload_style,
+            accept="image/jpg,image/jpeg",
+        ),
+        html.Div(
+            dbc.Button("Predict", id="predict_btn1", color="primary"),
+            className="d-grid gap-2 col-4 mx-auto",
+        ),
+        html.Div(id="output_image", className="text-center"),
+        dbc.Row(
+            [
+                dbc.Col(width=5),
+                dbc.Col(id="output_table", width=2),
+                dbc.Col(width=5),
+            ]
+        ),
+        html.H5("Processed Image"),
+        html.Div(id="output_fig"),
+    ]
 
-    return html.Div([html.H3("5-Class Predictor")])
+    if tab == "binary_tab":
+        return [html.H3("Binary Classification: sunny vs. cloudy")] + main_body
+
+    return [html.H3("5-Class Predictor")] + main_body
 
 
 table_header = [
@@ -146,11 +147,13 @@ table_header = [
     Input("predict_btn1", "n_clicks"),
     State("upload1", "contents"),
     State("upload1", "filename"),
+    State("main_tabs", "value"),
     running=[
         (Output("predict_btn1", "disabled"), True, False),
     ],
 )
-def upload_image(n_clicks, content, filename):
+def upload_process_image(n_clicks, content, filename, tab):
+    print(tab)
 
     if content is not None:
         # decode base64 image into IOByte
