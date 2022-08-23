@@ -72,11 +72,21 @@ row = html.Div(
     ]
 )
 
+# Read external files
+with open("./pages/Binary.md") as file:
+    binary_md = file.read()
+
+with open("./pages/CNN.md") as file:
+    cnn_md = file.read()
+
+with open("./README.md") as file:
+    README = file.read()
+
 app.layout = dbc.Container(
     [
         # row,
-        html.H1("online weather status predictor from images".title()),
-        html.P("To start select the way you want to predict."),
+        dcc.Markdown(README),
+        html.H3("To start select the way you want to predict."),
         # Loading indicator
         dcc.Loading(
             id="loading",
@@ -129,6 +139,8 @@ def render_main_tabs(tab):
             className="d-grid gap-2 col-4 mx-auto",
         ),
         html.Div(id="output_image", className="text-center"),
+        html.H5("Processed Image"),
+        html.Div(id="output_fig"),
         dbc.Row(
             [
                 dbc.Col(width=5),
@@ -136,14 +148,12 @@ def render_main_tabs(tab):
                 dbc.Col(width=5),
             ]
         ),
-        html.H5("Processed Image"),
-        html.Div(id="output_fig"),
     ]
 
     if tab == "binary_tab":
-        return [html.H3("Binary Classification: sunny vs. cloudy")] + main_body
+        return [dcc.Markdown(binary_md)] + main_body
 
-    return [html.H3("5-Class Predictor")] + main_body
+    return [dcc.Markdown(cnn_md)] + main_body
 
 
 table_header = [
@@ -211,7 +221,9 @@ def upload_process_image(n_clicks, content, filename, tab):
             df = pd.DataFrame(
                 {
                     "Class": CLASSES.keys(),
-                    "Probability": [str(x) for x in np.round(prob * 100, 1).flatten()],
+                    "Probability": [
+                        str(x) for x in np.round(prob * 100, 1).flatten()
+                    ],
                 },
             ).sort_values("Probability", ascending=False)
 
@@ -221,7 +233,10 @@ def upload_process_image(n_clicks, content, filename, tab):
                 None,
                 construct_html_image(pil_img, filename),
                 dbc.Table.from_dataframe(
-                    df, striped=True, bordered=True, hover=True,
+                    df,
+                    striped=True,
+                    bordered=True,
+                    hover=True,
                 ),
                 dcc.Graph(figure=fig),
             )
