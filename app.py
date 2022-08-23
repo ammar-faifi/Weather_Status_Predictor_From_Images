@@ -6,6 +6,7 @@ import io
 import pickle
 import base64
 
+import plotly.express as px
 import numpy as np
 import dash_bootstrap_components as dbc
 from PIL import Image
@@ -84,13 +85,12 @@ app.layout = dbc.Container(
 )
 
 
-def construct_html_image(contents, filename):
+def construct_html_image(image, filename):
     return html.Div(
         [
-            html.H5(filename),
-            # HTML images accept base64 encoded strings in the same format
-            # that is supplied by the upload
-            html.Img(src=contents, style={"width": "50%"}),
+            html.H5("Original Image"),
+            html.P(filename),
+            dcc.Graph(figure=px.imshow(image)),
             html.Hr(),
         ]
     )
@@ -119,11 +119,15 @@ def render_main_tabs(tab):
                 className="d-grid gap-2 col-4 mx-auto",
             ),
             html.Div(id="output_image", className="text-center"),
-            dbc.Row([
-                dbc.Col(width=4),
-                dbc.Col(id="output_table", width=4),
-                dbc.Col(width=4)
-            ]),
+            dbc.Row(
+                [
+                    dbc.Col(width=5),
+                    dbc.Col(id="output_table", width=2),
+                    dbc.Col(width=5),
+                ]
+            ),
+            html.H5("Processed Image"),
+            html.Div(id="output_fig"),
         ]
 
     return html.Div([html.H3("5-Class Predictor")])
@@ -135,9 +139,10 @@ table_header = [
 
 
 @app.callback(
+    Output("loading", "children"),
     Output("output_image", "children"),
     Output("output_table", "children"),
-    Output("loading", "children"),
+    Output("output_fig", "children"),
     Input("predict_btn1", "n_clicks"),
     State("upload1", "contents"),
     State("upload1", "filename"),
@@ -151,25 +156,33 @@ def upload_image(n_clicks, content, filename):
         # decode base64 image into IOByte
         text = content.removeprefix("data:image/jpeg;base64,")
         text = base64.b64decode(text)
+        pil_img = Image.open(io.BytesIO(text))
         img = (
-            Image.open(io.BytesIO(text))
-            .convert("L")
-            .resize((ML_PIXELS, ML_PIXELS))
+            np.asarray(pil_img.convert("L").resize((ML_PIXELS, ML_PIXELS)))
+            / 255
         )
-        img_array = np.asarray(img).flatten() / 255
-        prob = tunned_xgb_random_result.predict_proba([img_array]).flatten()
+
+        prob = tunned_xgb_random_result.predict_proba(
+            [img.flatten()]
+        ).flatten()
         prob = np.round(prob * 100, 1)
 
         row1 = html.Tr([html.Td("Sunny"), html.Td(str(prob[0]))])
         row2 = html.Tr([html.Td("Cloudy"), html.Td(str(prob[1]))])
-
         table = dbc.Table(
             table_header + [html.Tbody([row1, row2])], bordered=True
         )
 
-        return construct_html_image(content, filename), table, None
+        fig = px.imshow(np.asarray(img), color_continuous_scale="gray")
 
-    return (None,) * 3
+        return (
+            None,
+            construct_html_image(pil_img, filename),
+            table,
+            dcc.Graph(figure=fig),
+        )
+
+    return (None,) * 4
 
 
 if __name__ == "__main__":
