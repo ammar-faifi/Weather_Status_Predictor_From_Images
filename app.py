@@ -39,7 +39,9 @@ def predict():
     )
 
     prediction = model.predict(img.reshape((1, CNN_PIXELS, CNN_PIXELS, 3)))
-    return json.dumps({"result": prediction.flatten().tolist()})
+    return json.dumps(
+        {"result": np.round(prediction.flatten() * 100, 1).tolist()}
+    )
 
 
 if __name__ == "__main__":
