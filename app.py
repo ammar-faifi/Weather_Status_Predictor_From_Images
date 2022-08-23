@@ -32,7 +32,6 @@ def predict():
 
     text = base64.b64decode(data["image"])
     pil_img = Image.open(io.BytesIO(text))
-    pil_img.show()
 
     img = (
         np.asarray(pil_img.convert("RGB").resize((CNN_PIXELS, CNN_PIXELS)))
@@ -40,7 +39,7 @@ def predict():
     )
 
     prediction = model.predict(img.reshape((1, CNN_PIXELS, CNN_PIXELS, 3)))
-    return json.dumps({"result": prediction.flatten()})
+    return json.dumps({"result": prediction.flatten().tolist()})
 
 
 if __name__ == "__main__":
