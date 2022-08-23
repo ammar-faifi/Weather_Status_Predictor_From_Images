@@ -6,22 +6,35 @@ import io
 import pickle
 import base64
 
-import plotly.express as px
 import numpy as np
+import pandas as pd
+import tensorflow as tf
+import plotly.express as px
 import dash_bootstrap_components as dbc
 from PIL import Image
 from sklearn.model_selection import RandomizedSearchCV
+from keras.models import load_model, Sequential
+
 from dash import Dash, dcc, html, Input, Output, State
 
 
 ML_PIXELS = 50
 CNN_PIXELS = 200
+CLASSES = {
+    "sunny": 0,
+    "cloudy": 1,
+    "foggy": 2,
+    "rainy": 3,
+    "snowy": 4,
+}
 
 # Load ML and DL models
 with open("./code/tunned_xgb_random_result.pickle", "rb") as file:
     tunned_xgb_random_result: RandomizedSearchCV = pickle.load(file)
 
+cnn_model: Sequential = load_model("./code/CNN")
 
+# Setup Dash
 external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
 app = Dash(
     __name__,
@@ -160,30 +173,62 @@ def upload_process_image(n_clicks, content, filename, tab):
         text = content.removeprefix("data:image/jpeg;base64,")
         text = base64.b64decode(text)
         pil_img = Image.open(io.BytesIO(text))
-        img = (
-            np.asarray(pil_img.convert("L").resize((ML_PIXELS, ML_PIXELS)))
-            / 255
-        )
 
-        prob = tunned_xgb_random_result.predict_proba(
-            [img.flatten()]
-        ).flatten()
-        prob = np.round(prob * 100, 1)
+        if tab == "binary_tab":
+            img = (
+                np.asarray(pil_img.convert("L").resize((ML_PIXELS, ML_PIXELS)))
+                / 255
+            )
 
-        row1 = html.Tr([html.Td("Sunny"), html.Td(str(prob[0]))])
-        row2 = html.Tr([html.Td("Cloudy"), html.Td(str(prob[1]))])
-        table = dbc.Table(
-            table_header + [html.Tbody([row1, row2])], bordered=True
-        )
+            prob = tunned_xgb_random_result.predict_proba(
+                [img.flatten()]
+            ).flatten()
+            prob = np.round(prob * 100, 1)
 
-        fig = px.imshow(np.asarray(img), color_continuous_scale="gray")
+            row1 = html.Tr([html.Td("Sunny"), html.Td(str(prob[0]))])
+            row2 = html.Tr([html.Td("Cloudy"), html.Td(str(prob[1]))])
+            table = dbc.Table(
+                table_header + [html.Tbody([row1, row2])], bordered=True
+            )
 
-        return (
-            None,
-            construct_html_image(pil_img, filename),
-            table,
-            dcc.Graph(figure=fig),
-        )
+            fig = px.imshow(np.asarray(img), color_continuous_scale="gray")
+
+            return (
+                None,
+                construct_html_image(pil_img, filename),
+                table,
+                dcc.Graph(figure=fig),
+            )
+
+        if tab == "cnn_tab":
+            img = (
+                np.asarray(
+                    pil_img.convert("RGB").resize((CNN_PIXELS, CNN_PIXELS))
+                )
+                / 255
+            )
+            prob = cnn_model.predict(
+                img.reshape((1, CNN_PIXELS, CNN_PIXELS, 3))
+            ).flatten()
+
+            df = pd.DataFrame(
+                {
+                    "Class": CLASSES.keys(),
+                    "Probability": [str(x) for x in np.round(prob * 100, 1).flatten()],
+                },
+            ).sort_values("Probability", ascending=False)
+            print(df)
+
+            fig = px.imshow(np.asarray(img))
+
+            return (
+                None,
+                construct_html_image(pil_img, filename),
+                dbc.Table.from_dataframe(
+                    df, striped=True, bordered=True, hover=True,
+                ),
+                dcc.Graph(figure=fig),
+            )
 
     return (None,) * 4
 
