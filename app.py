@@ -8,7 +8,6 @@ import base64
 
 import numpy as np
 import pandas as pd
-import tensorflow as tf
 import plotly.express as px
 import dash_bootstrap_components as dbc
 from PIL import Image
@@ -166,8 +165,6 @@ table_header = [
     ],
 )
 def upload_process_image(n_clicks, content, filename, tab):
-    print(tab)
-
     if content is not None:
         # decode base64 image into IOByte
         text = content.removeprefix("data:image/jpeg;base64,")
@@ -217,7 +214,6 @@ def upload_process_image(n_clicks, content, filename, tab):
                     "Probability": [str(x) for x in np.round(prob * 100, 1).flatten()],
                 },
             ).sort_values("Probability", ascending=False)
-            print(df)
 
             fig = px.imshow(np.asarray(img))
 
