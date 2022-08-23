@@ -214,7 +214,7 @@ def upload_process_image(n_clicks, content, filename, tab):
                 {
                     "Class": CLASSES.keys(),
                     "Probability": [
-                        str(x) for x in res.json()['result']
+                        round(x, 1) for x in res.json()['result']
                     ],
                 },
             ).sort_values("Probability", ascending=False)
