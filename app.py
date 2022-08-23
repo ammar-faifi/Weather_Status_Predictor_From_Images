@@ -8,15 +8,15 @@ import base64
 
 import numpy as np
 import pandas as pd
+import requests as rq
 import plotly.express as px
 import dash_bootstrap_components as dbc
 from PIL import Image
 from sklearn.model_selection import RandomizedSearchCV
-from keras.models import load_model, Sequential
 
 from dash import Dash, dcc, html, Input, Output, State
 
-
+TF_API = "https://dsi-weather-predictor-tf.herokuapp.com/predict"
 ML_PIXELS = 50
 CNN_PIXELS = 200
 CLASSES = {
@@ -30,8 +30,6 @@ CLASSES = {
 # Load ML and DL models
 with open("./code/tunned_xgb_random_result.pickle", "rb") as file:
     tunned_xgb_random_result: RandomizedSearchCV = pickle.load(file)
-
-cnn_model: Sequential = load_model("./code/CNN")
 
 # Setup Dash
 external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
@@ -178,8 +176,7 @@ def upload_process_image(n_clicks, content, filename, tab):
     if content is not None:
         # decode base64 image into IOByte
         text = content.removeprefix("data:image/jpeg;base64,")
-        text = base64.b64decode(text)
-        pil_img = Image.open(io.BytesIO(text))
+        pil_img = Image.open(io.BytesIO(base64.b64decode(text)))
 
         if tab == "binary_tab":
             img = (
@@ -208,25 +205,26 @@ def upload_process_image(n_clicks, content, filename, tab):
             )
 
         if tab == "cnn_tab":
+            res = rq.post(TF_API, json={'image': text})
+
+            if not res.ok:
+                raise Exception("Not valid data")
+
+            df = pd.DataFrame(
+                {
+                    "Class": CLASSES.keys(),
+                    "Probability": [
+                        str(x) for x in res.json()['result']
+                    ],
+                },
+            ).sort_values("Probability", ascending=False)
+
             img = (
                 np.asarray(
                     pil_img.convert("RGB").resize((CNN_PIXELS, CNN_PIXELS))
                 )
                 / 255
             )
-            prob = cnn_model.predict(
-                img.reshape((1, CNN_PIXELS, CNN_PIXELS, 3))
-            ).flatten()
-
-            df = pd.DataFrame(
-                {
-                    "Class": CLASSES.keys(),
-                    "Probability": [
-                        str(x) for x in np.round(prob * 100, 1).flatten()
-                    ],
-                },
-            ).sort_values("Probability", ascending=False)
-
             fig = px.imshow(np.asarray(img))
 
             return (
