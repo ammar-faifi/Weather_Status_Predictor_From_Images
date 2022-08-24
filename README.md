@@ -10,6 +10,13 @@ similar approach but with images taken with smart phones or digital cameras of a
 predict the appearing weather status in that appearance. I used different algorithms for ML using only two classes, that is, *sunny* and *cloudy*. For CNN I used the entire dataset of more than 18K images with 5-class
 weather status. Each image is 200x200 pixels with 3-channel colors.
 
+## Online Predictor
+
+The final models that I reached are deployed on Heroku [Visit](https://dsi-weather-predictor.herokuapp.com)
+you can predict on binary classification or with 5-class classification.
+
+![CNN Confusion Matrix](pages/CNN_confusion_matrix.png)
+
 ## Data Dictionary
 
 You can find the dataset in [Kaggle](https://www.kaggle.com/datasets/ammaralfaifi/5class-weather-status-image-classification), where more details about the data is given.
