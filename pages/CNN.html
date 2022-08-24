@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>site - Weather Status Predictor From Images</title>
+<title>site – cnn</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -18,22 +18,22 @@ ul.task-list{list-style: none;}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -55,7 +55,7 @@ ul.task-list{list-style: none;}
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -64,7 +64,7 @@ ul.task-list{list-style: none;}
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="./index.html">
+      <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">site</span>
   </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -73,16 +73,16 @@ ul.task-list{list-style: none;}
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page">Home</a>
+    <a class="nav-link" href="../index.html">Home</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./code/Binary_Classification.html">Binary Clssification with ML</a>
+    <a class="nav-link" href="../code/Binary_Classification.html">Binary Clssification with ML</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./code/DL.html">Basic DL</a>
+    <a class="nav-link" href="../code/DL.html">Basic DL</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./code/CNN.html">CNN</a>
+    <a class="nav-link" href="../code/CNN.html">CNN</a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -99,96 +99,26 @@ ul.task-list{list-style: none;}
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#about-the-project" id="toc-about-the-project" class="nav-link active" data-scroll-target="#about-the-project">About the Project</a></li>
-  <li><a href="#online-predictor" id="toc-online-predictor" class="nav-link" data-scroll-target="#online-predictor">Online Predictor</a></li>
-  <li><a href="#data-dictionary" id="toc-data-dictionary" class="nav-link" data-scroll-target="#data-dictionary">Data Dictionary</a></li>
-  <li><a href="#data-summary" id="toc-data-summary" class="nav-link" data-scroll-target="#data-summary">Data Summary</a></li>
+  <li><a href="#class-predictor-with-cnn" id="toc-class-predictor-with-cnn" class="nav-link active" data-scroll-target="#class-predictor-with-cnn">5-Class Predictor with CNN</a>
+  <ul class="collapse">
+  <li><a href="#about" id="toc-about" class="nav-link" data-scroll-target="#about">About</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Weather Status Predictor From Images</h1>
-</div>
 
 
+<section id="class-predictor-with-cnn" class="level1">
+<h1>5-Class Predictor with CNN</h1>
+<section id="about" class="level2">
+<h2 class="anchored" data-anchor-id="about">About</h2>
+<p><code>Tensorflow</code> with <code>keras</code>’ Sequential model were used. Unlike the ML one, this model was trained with the entire 18K-image dataset. The fed image’s dimensions is 200x200 pixels, each with 3-channel color. The maximum accuracy achieved on the validation set is 73%. It can be improved with some optimizations as applying image augmentation.</p>
 
-<div class="quarto-title-meta">
 
-    
-    
-  </div>
-  
-
-</header>
-
-<section id="about-the-project" class="level2">
-<h2 class="anchored" data-anchor-id="about-the-project">About the Project</h2>
-<p>predicting weather status has been a rich field to apply the technology of machine learning (ML) and deep learning (DL) along with Convolutional Neural Network (CNN). There are so many examples of projects with various level of accuracy and advance that predict or classify the weather status from given satellite images in visible light, infrared ranges, or other light spectra. However, for this project I will do a similar approach but with images taken with smart phones or digital cameras of a landscape views, then try to predict the appearing weather status in that appearance. I used different algorithms for ML using only two classes, that is, <em>sunny</em> and <em>cloudy</em>. For CNN I used the entire dataset of more than 18K images with 5-class weather status. Each image is 200x200 pixels with 3-channel colors.</p>
 </section>
-<section id="online-predictor" class="level2">
-<h2 class="anchored" data-anchor-id="online-predictor">Online Predictor</h2>
-<p>The final models that I reached are deployed on Heroku <a href="https://dsi-weather-predictor.herokuapp.com">Visit</a> you can predict on binary classification or with 5-class classification. Check the confusion matrix</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="pages/CNN_confusion_matrix.png" class="img-fluid figure-img"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">CNN Confusion Matrix</figcaption><p></p>
-</figure>
-</div>
-</section>
-<section id="data-dictionary" class="level2">
-<h2 class="anchored" data-anchor-id="data-dictionary">Data Dictionary</h2>
-<p>You can find the dataset in <a href="https://www.kaggle.com/datasets/ammaralfaifi/5class-weather-status-image-classification">Kaggle</a>, where more details about the data is given.</p>
-</section>
-<section id="data-summary" class="level2">
-<h2 class="anchored" data-anchor-id="data-summary">Data Summary</h2>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Class</th>
-<th>Folder</th>
-<th>Images Count</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Sunny</td>
-<td>sunny</td>
-<td>6702</td>
-</tr>
-<tr class="even">
-<td>Cloudy</td>
-<td>cloudy</td>
-<td>6274</td>
-</tr>
-<tr class="odd">
-<td>Foggy</td>
-<td>foggy</td>
-<td>1261</td>
-</tr>
-<tr class="even">
-<td>Rainy</td>
-<td>rainy</td>
-<td>1927</td>
-</tr>
-<tr class="odd">
-<td>Snowy</td>
-<td>snowy</td>
-<td>1875</td>
-</tr>
-<tr class="even">
-<td>Total</td>
-<td>-</td>
-<td>18039</td>
-</tr>
-</tbody>
-</table>
-<hr>
-
-
 </section>
 
 </main> <!-- /main -->
