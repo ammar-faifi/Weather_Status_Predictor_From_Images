@@ -17,11 +17,17 @@ you can predict on binary classification or with 5-class classification.
 
 ![CNN Confusion Matrix](pages/CNN_confusion_matrix.png)
 
-## Data Dictionary
+## Data
+
+### About
+
+I wanted to collect real fresh outdoors images with fire classes in a part of Misk Foundation Data Science Immersive project. With MS Bing API I collected and cleaned up to 1500 images for all classes. Further, I collected data from four kaggle datasets, their credits are below.
+
+### Dictionary
 
 You can find the dataset in [Kaggle](https://www.kaggle.com/datasets/ammaralfaifi/5class-weather-status-image-classification), where more details about the data is given.
 
-## Data Summary
+### Data Summary
 
 | Class   |   Folder  |   Images Count  |
 ---       | ---       | ---             |
@@ -32,3 +38,11 @@ You can find the dataset in [Kaggle](https://www.kaggle.com/datasets/ammaralfaif
 | Snowy   | snowy     | 1875             |
 | Total   | -         | 18039            |
 ---
+
+### Sources
+
+1 - Manually from Bing API
+2 - https://www.kaggle.com/datasets/jagadeesh23/weather-classification
+3 - https://www.kaggle.com/datasets/polavr/twoclass-weather-classification
+4 - https://www.kaggle.com/datasets/jehanbhathena/weather-dataset
+5 - https://www.kaggle.com/datasets/pratik2901/multiclass-weather-dataset
