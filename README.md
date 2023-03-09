@@ -12,6 +12,9 @@ weather status. Each image is 200x200 pixels with 3-channel colors.
 
 ## Online Predictor
 
+To predict an image [TRY NOW](https://web-production-df4e.up.railway.app/)
+
+
 The final models that I reached are deployed on Heroku [Visit](https://dsi-weather-predictor.herokuapp.com)
 you can predict on binary classification or with 5-class classification.
 
