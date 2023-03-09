@@ -15,7 +15,7 @@ weather status. Each image is 200x200 pixels with 3-channel colors.
 To predict an image [TRY NOW](https://web-production-df4e.up.railway.app/)
 
 
-The final models that I reached are deployed on Heroku [Visit](https://dsi-weather-predictor.herokuapp.com)
+The final models that I reached are deployed on Railway
 you can predict on binary classification or with 5-class classification.
 
 ![CNN Confusion Matrix](pages/CNN_confusion_matrix.png)
