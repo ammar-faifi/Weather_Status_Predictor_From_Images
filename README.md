@@ -2,13 +2,13 @@
 
 ## About the Project
 
-predicting weather status has been a rich field to apply the technology of machine
-learning (ML) and deep learning (DL) along with Convolutional Neural Network (CNN). There are so many examples of
-projects with various level of accuracy and advance that predict or classify the weather status from given
-satellite images in visible light, infrared ranges, or other light spectra. However, for this project I will do a
-similar approach but with images taken with smart phones or digital cameras of a landscape views, then try to
-predict the appearing weather status in that appearance. I used different algorithms for ML using only two classes, that is, *sunny* and *cloudy*. For CNN I used the entire dataset of more than 18K images with 5-class
-weather status. Each image is 200x200 pixels with 3-channel colors.
+The application of machine learning (ML) and deep learning (DL) technologies, accompanied by Convolutional Neural Network (CNN), 
+has been extensively explored in the field of weather forecasting. Numerous projects have been executed with varying degrees of 
+accuracy and sophistication, which use satellite images captured in visible light, infrared ranges, or other light spectra to 
+predict or classify weather conditions. However, my project aims to apply a similar approach, but using landscape images taken 
+with smartphones or digital cameras to predict the weather conditions depicted in the image. I utilized various ML algorithms 
+with only two weather classes - sunny and cloudy - and CNN with the full dataset of over 18K images, with five weather classes. 
+Each image is 200x200 pixels with 3-channel colors.
 
 ## Online Predictor
 
